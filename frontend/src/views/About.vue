@@ -9,6 +9,7 @@
 <script>
 import Calendar from '../components/Calendar.vue';
 import PriorityList from '../components/PriorityList.vue';
+import axios from 'axios';
 
 
 export default {
@@ -16,6 +17,8 @@ export default {
   components : {
     Calendar,
     PriorityList,
+  },
+  methods : {
   }
 }
 </script>
@@ -28,4 +31,5 @@ export default {
         height : 20px;
         width : 100px;
     }
+
 </style>

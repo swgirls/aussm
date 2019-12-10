@@ -4,6 +4,7 @@
         <a href="#" v-on:click="onClickPrev(currentMonth)">◀</a>
         {{currentYear}}년 {{currentMonth}}월
         <a href="#" v-on:click="onClickNext(currentMonth)">▶</a>
+        <button id="createButton" v-on:click="updateSchedule" style ="margin-left: 50px; width:100px; height: 30px; font-size: 20px;">Update</button>
       </h2>
       <table class="table table-hover">
           <thead>
@@ -23,6 +24,16 @@
                   {{day}}
                   <!--<span>HELLO</span>-->
                 </span>
+                <br>
+                <span v-if="isPrivateSchedule(currentYear,currentMonth,day)" style ="color : #F6B352">
+                {{ pstitle }}
+                </span>
+                <br>
+                <span v-if = "isUniversitySchedule(currentYear,currentMonth,day)" style ="color : #6C49B8">
+                {{ ustitle }}
+                <br>
+                {{ ussubname }}
+                </span>
               </td>
             </tr>
           </tbody>
@@ -31,6 +42,10 @@
 </template>
 
 <script>
+import axios from 'axios';
+
+var privateschedules = [];
+var universityschedules = [];
 export default {
   name: 'Calendar',
   data () {
@@ -45,12 +60,51 @@ export default {
       currentCalendarMatrix: [],
       endOfDay: null,
       memoDatas: [],
+      pstitle : '',
+      ustitle : '',
+      ussubname : '',
     }
   },
   mounted(){
       this.init();
   },
+  async beforeCreate() {
+    const resultSchedule = await this.axios.get('/schedule');
+        privateschedules = resultSchedule.data.pri;
+        universityschedules = resultSchedule.data.uni;
+        //console.log(this.privateschedules, this.universityschedules);
+  },
   methods: {
+     updateSchedule : function (){
+          this.$router.push({
+            name:'home'
+          })
+          
+      },
+      isPrivateSchedule: function(year,month,day){
+        //console.log(privateschedules[0]);
+        for (let i = 0; i < privateschedules.length; i++) {
+          var dateForm = privateschedules[i].date.substr(0,10);
+          var date = new Date(dateForm);
+          //console.log("fff"+date.getFullYear());
+          if (year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate()){
+              this.pstitle = privateschedules[i].title;
+              return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
+          }
+        } 
+      },
+      isUniversitySchedule: function(year,month,day){
+        for (let i = 0; i < universityschedules.length; i++){
+          var dateForm = universityschedules[i].date.substr(0,10);
+          var date = new Date(dateForm);
+          //console.log(universityschedules[i]);
+          if(year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate()){
+            this.ustitle = universityschedules[i].title;
+            this.ussubname = universityschedules[i].subjectName;
+            return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
+          }
+        } 
+      },
       init:function(){
         this.currentMonthStartWeekIndex = this.getStartWeek(this.currentYear, this.currentMonth);
         this.endOfDay = this.getEndOfDay(this.currentYear, this.currentMonth);
