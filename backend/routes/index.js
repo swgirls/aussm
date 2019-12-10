@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 const autoInc = require('mongoose-auto-increment');
-mongoose.connect('mongodb://localhost:27017/aussm', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/AUSSM', { useUnifiedTopology: true, useNewUrlParser: true });
 autoInc.initialize(mongoose.connection);
 const conn = mongoose.connection;
 var dateUtils = require('date-utils');
