@@ -56,6 +56,7 @@
             var current_week_begin = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + d.getDate());
             var current_week_end = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + (d.getDate() + 7));
             //console.log(current_week_begin,current_week_end,typeof(current_week_begin));
+
             for(var i = 0; i<this.scheduleList.length; i++){
                var dateForm = this.scheduleList[i].date.substr(0,10);
                var date = new Date(dateForm);
