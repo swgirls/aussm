@@ -70,9 +70,8 @@
 
             var d = new Date();
 
-            var current_week_begin = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + (d.getDate() - d.getDay() + 1));
-            var current_week_end = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + (d.getDate() - d.getDay() + 7));
-
+            var current_week_begin = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + (d.getDate()));
+            var current_week_end = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + (d.getDate()+ 7));
             for(var i = 0; i<this.scheduleList.length; i++){
                var dateForm = this.scheduleList[i].date.substr(0,10);
                var date = new Date(dateForm);
