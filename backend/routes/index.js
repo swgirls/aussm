@@ -55,10 +55,7 @@ router.post('/register',async function(req, res, next){
   console.log(typeof(date));
   //var dueDate = date.toFormat('YYYY-MM-DD');
   const privateSchedule = await privateModel.create({title : title, date : date});
-  var unidate = new Date();
-  const universitySchedule = await universityModel.create({title : 'Domain Analysis Assignment', date : unidate, semester : '3-2', subjectName : 'Domain Analysis'});
 
-  const result2 = await universitySchedule.save();
   try {
     const result = await privateSchedule.save();
     res.send("true");
@@ -73,9 +70,39 @@ router.post('/register',async function(req, res, next){
 router.get('/schedule', async function(req, res, next){
     try{
       const privateschedules = await privateModel.find({});
+        var unidate = new Date();
+        const checkSchedule = await universityModel.findOne({"title": "Domain Analysis iteration1 Assignment"});
+        if(checkSchedule==null){
+            var from = "2019-12-10 00:00:00";
+            var dateForm = from.substr(0,10);
+            var date = new Date(dateForm);
+
+        const universitySchedule = await universityModel.create({title : 'Domain Analysis iteration1 Assignment', date : date, semester : '3-2', subjectName : 'Domain Analysis'});
+        const result2 = await universitySchedule.save();
+        }
+        const checkSchedule1 = await universityModel.findOne({"title": "Web System Assignment 1"});
+        if(checkSchedule1 == null){
+            var from ="2019-12-12 00:00:00";
+            var dateForm = from.substr(0,10);
+            var date = new Date(dateForm);
+
+            const universitySchedule = await universityModel.create({title : 'Web System Assignment 1', date : date, semester : '3-2', subjectName : 'Web System'});
+            const result2 = await universitySchedule.save();
+        }
+        const checkSchedule2 = await universityModel.findOne({"title": "Machine learning and Data mining ass1"});
+        if(checkSchedule2 == null){
+            var from ="2019-12-15 00:00:00";
+            var dateForm = from.substr(0,10);
+            var date = new Date(dateForm);
+
+            const universitySchedule = await universityModel.create({title : 'Machine learning and Data mining ass1', date : date, semester : '3-2', subjectName : 'Machine learning and Data mining'});
+            const result2 = await universitySchedule.save();
+        }
+
       const universityschdules = await universityModel.find({});
       console.log(privateschedules,universityschdules);
       res.send({pri : privateschedules, uni :universityschdules});
+
     }
     catch(err){
       console.log("gggg");
