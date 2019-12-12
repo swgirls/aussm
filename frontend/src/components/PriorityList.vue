@@ -1,32 +1,33 @@
-<template xmlns:v-on="http://www.w3.org/1999/xhtml">
+<template xmlns:v-on="http://www.w3.org/1999/xhtml" xmlns:v-bind="http://www.w3.org/1999/xhtml">
    <div class ="priorityList">
       <h1 style ="color :#2c3e50">Priority List</h1>
       <button v-on:click="updatePriority" style ="margin-left: 300px; width:100px; height: 30px; font-size: 20px;" id="Update">update</button>
       <hr style="border : 2px solid #8EC0E4; width : 450px;">
-      <div v-if="showPriority" >
-         <img src = "../assets/one.png" style="width: 25px; height: 25px; margin-right:30px;">
-         <span>{{firstTitle}}</span>
+      <div v-if="showPriority" v-for="(wsl,i) in weeklyScheduleList">
+         <img v-bind:src="imageCount[i]" style="width: 25px; height: 25px; margin-right:30px;">
+         <span>{{wsl.title}}</span>
          <br>
-         <span style ="color :#F0E5DE">------------------------------------------------------------------------------------------------</span>
-         <br>
-         <img src = "../assets/two.png" style="width: 25px; height: 25px; margin-right:30px;">
-         <span>{{secondTitle}}</span>
-         <br>
-         <span style ="color :#F0E5DE">------------------------------------------------------------------------------------------------</span>
-         <br>
-         <img src = "../assets/three.png" style="width: 25px; height: 25px; margin-right:30px;">
-         <span>{{thirdTitle}}</span>
-         <br>
-         <span style ="color :#F0E5DE">------------------------------------------------------------------------------------------------</span>
-         <br>
-         <img src = "../assets/four.png" style="width: 25px; height: 25px; margin-right:30px;">
-         <span>{{fourthTitle}}</span>
-         <br>
-         <span style ="color :#F0E5DE">------------------------------------------------------------------------------------------------</span>
-         <br>
-         <img src = "../assets/five.png" style="width: 25px; height: 25px; margin-right:30px;">
-         <span>{{fifthTitle}}</span>
       </div>
+<!--         <span style ="color :#F0E5DE">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</span>-->
+<!--         <br>-->
+<!--         <img src = "../assets/two.png" style="width: 25px; height: 25px; margin-right:30px;">-->
+<!--         <span>{{secondTitle}}</span>-->
+<!--         <br>-->
+<!--         <span style ="color :#F0E5DE">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</span>-->
+<!--         <br>-->
+<!--         <img src = "../assets/three.png" style="width: 25px; height: 25px; margin-right:30px;">-->
+<!--         <span>{{thirdTitle}}</span>-->
+<!--         <br>-->
+<!--         <span style ="color :#F0E5DE">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</span>-->
+<!--         <br>-->
+<!--         <img src = "../assets/four.png" style="width: 25px; height: 25px; margin-right:30px;">-->
+<!--         <span>{{fourthTitle}}</span>-->
+<!--         <br>-->
+<!--         <span style ="color :#F0E5DE">&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;&#45;</span>-->
+<!--         <br>-->
+<!--         <img src = "../assets/five.png" style="width: 25px; height: 25px; margin-right:30px;">-->
+<!--         <span>{{fifthTitle}}</span>-->
+<!--      </div>-->
       <br>
 
    </div>
@@ -45,6 +46,7 @@
             thirdTitle:'',
             fourthTitle:'',
             fifthTitle:'',
+            imageCount:['../assets/one.png','../assets/two.png','../assets/three.png','../assets/four.png','../assets/five.png']
          }
       },
       methods:{
@@ -69,7 +71,7 @@
             this.scheduleList = Schedule;
 
             var d = new Date();
-
+            this.weeklyScheduleList = [];
             var current_week_begin = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + (d.getDate()));
             var current_week_end = new Date(d.getFullYear() + '-' + (d.getMonth() + 1) + '-' + (d.getDate()+ 7));
             for(var i = 0; i<this.scheduleList.length; i++){
@@ -79,16 +81,15 @@
                   this.weeklyScheduleList.push(this.scheduleList[i]);
                }
             }
-            this.weeklyScheduleList.sort((a,b) => { return b.date < a.date ? -1 : b.date > a.date ? 1 : 0;});
-               this.firstTitle = this.weeklyScheduleList[4].title;
-               this.secondTitle = this.weeklyScheduleList[3].title;
-               this.thirdTitle = this.weeklyScheduleList[2].title;
-               this.fourthTitle = this.weeklyScheduleList[1].title;
-               this.fifthTitle = this.weeklyScheduleList[0].title;
+            this.weeklyScheduleList.sort((a,b) => { return b.date < a.date ? 1 : b.date > a.date ? -1 : 0;});
+               // this.firstTitle = this.weeklyScheduleList[4].title;
+               // this.secondTitle = this.weeklyScheduleList[3].title;
+               // this.thirdTitle = this.weeklyScheduleList[2].title;
+               // this.fourthTitle = this.weeklyScheduleList[1].title;
+               // this.fifthTitle = this.weeklyScheduleList[0].title;
 
             this.scheduleList = [{}];
             this.showPriority = true;
-
          }
       }
    }

@@ -2,8 +2,8 @@
   <div class="about">
     <span style = "margin-left : 150px;font-size: 40px;">Your Calendar</span>
     <router-link to ="/register"><button id="createButton" style ="margin-left: 50px; width:100px; height: 30px; font-size: 20px;">Create</button></router-link>
-    <Calendar style ="width : 1000px; height: 700px; float : right;"/>
-    <PriorityList style ="width : 500px; height: 700px; float: left;"/>
+    <Calendar style ="width : 70%; height: 100%; float : right;"/>
+    <PriorityList style ="width : 30%; height: 100%; float: left;"/>
   </div>
 </template>
 <script>
