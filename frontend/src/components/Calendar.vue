@@ -40,11 +40,11 @@
                   <!--<span>HELLO</span>-->
                 </span>
                 <br>
-                <span v-if="isPrivateSchedule(currentYear,currentMonth,day)" style ="color : #F6B352">
+                <span v-if="isPrivateSchedule(currentYear,currentMonth,day)" style ="color : #F6B352" v-on:click = "deletepriSchedule(pstitle)">
                 {{ pstitle }}
                 </span>
                 <br>
-                <span v-if = "isUniversitySchedule(currentYear,currentMonth,day)" style ="color : #6C49B8">
+                <span v-if = "isUniversitySchedule(currentYear,currentMonth,day)" style ="color : #6C49B8" v-on:click = "deleteuniSchedule(ustitle)">
                 {{ ustitle }}
                 <br>
                 {{ ussubname }}
@@ -110,6 +110,29 @@ export default {
           this.uList = anotherUniversityS;
 
       }, //비교해서 새로운거 넣는거 없앰
+
+      deletepriSchedule : async function(title) {
+          const deleteSchedule = await this.axios.delete('/deletepriSchedule/'+title);
+          if(deleteSchedule == "false") {
+            alert("Delete Fail!");
+          }
+          else {
+            alert("Delete Success!");
+          }
+          this.$router.push({
+            name:'home'
+          })
+      },
+      deleteuniSchedule : async function(utitle) {
+          const deleteSchedule2 = await this.axios.delete('/deleteuniSchedule/'+utitle);
+          if(deleteSchedule == "false") {
+            alert("Delete Fail!");
+          }
+          if(deleteSchedule2 == "true") {
+            alert("Delete Success!");
+          }
+      },
+
       isPrivateSchedule: function(year,month,day){
         //console.log(privateschedules[0]);
         for (let i = 0; i < this.pList.length; i++) {
