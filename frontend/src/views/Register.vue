@@ -39,7 +39,7 @@ export default {
         this.dueDate = '';
         this.title = '';
         this.$router.push({
-          name: 'home'
+          name: 'about'
         });
     }
   }

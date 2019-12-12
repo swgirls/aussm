@@ -5,6 +5,21 @@
         {{currentYear}}년 {{currentMonth}}월
         <a href="#" v-on:click="onClickNext(currentMonth)">▶</a>
         <button id="createButton" v-on:click="updateSchedule" style ="margin-left: 50px; width:100px; height: 30px; font-size: 20px;">Update</button>
+          <div class="popup" id="popUp">
+              <span class="helper" id="helperPopUp"></span>
+              <div>
+                  <div style="font-size: 20px;margin-top: 10px; color: #2b6bd1" >This Is Your University Schedule List</div>
+                    <div v-for="(name,index) in uList" v-bind:key="index">
+                        <div style="color: black; font-style: normal; font-size: 20px;
+                              margin-top: 10px">{{index+1}}. {{name.title}}<br></div>
+                    </div>
+                  <button v-on:click="popupCloseButton" style="margin-top: 10px; margin-bottom: 10px; background-color : white; border : 1.2px solid #4f953b; border-radius: 7px; color : #4f953b;">
+                      <div style="margin: 10px; font-size:20px">OK, I WANT UPDATE</div>
+                  </button>
+
+              </div>
+          </div>
+
       </h2>
       <table class="table table-hover">
           <thead>
@@ -46,6 +61,7 @@ import axios from 'axios';
 
 var privateschedules = [];
 var universityschedules = [];
+var anotherUniversityS = [];
 export default {
   name: 'Calendar',
   data () {
@@ -63,6 +79,9 @@ export default {
       pstitle : '',
       ustitle : '',
       ussubname : '',
+        uList : [],
+        pList: [],
+        justForComputed:0,
     }
   },
   mounted(){
@@ -71,16 +90,27 @@ export default {
   async beforeCreate() {
     const resultSchedule = await this.axios.get('/schedule');
         privateschedules = resultSchedule.data.pri;
-        universityschedules = resultSchedule.data.uni;
+        this.pList = privateschedules;
         //console.log(this.privateschedules, this.universityschedules);
   },
   methods: {
-     updateSchedule : function (){
-          this.$router.push({
-            name:'home'
-          })
-          
+      async popupCloseButton(){
+          document.getElementById('popUp').style.display = 'block';
+          document.getElementById('popUp').style.visibility = 'hidden';
+          const resultSchedule = await this.axios.get('/schedule');
+          universityschedules = resultSchedule.data.uni;
+          this.uList = universityschedules;
+            this.justForComputed = 1;
       },
+      updateSchedule : async function (){
+         document.getElementById('popUp').style.display = 'block';
+         document.getElementById('popUp').style.visibility = 'visible';
+          const resultSchedule = await this.axios.get('/schedule');
+          anotherUniversityS = resultSchedule.data.uni;
+          this.uList = anotherUniversityS;
+
+      }, //비교해서 새로운거 넣는거 없앰
+
       deletepriSchedule : async function(title) {
           const deleteSchedule = await this.axios.delete('/deletepriSchedule/'+title);
           if(deleteSchedule == "false") {
@@ -102,17 +132,18 @@ export default {
             alert("Delete Success!");
           }
       },
+
       isPrivateSchedule: function(year,month,day){
         //console.log(privateschedules[0]);
-        for (let i = 0; i < privateschedules.length; i++) {
-          var dateForm = privateschedules[i].date.substr(0,10);
+        for (let i = 0; i < this.pList.length; i++) {
+          var dateForm = this.pList[i].date.substr(0,10);
           var date = new Date(dateForm);
           //console.log("fff"+date.getFullYear());
           if (year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate()){
-              this.pstitle = privateschedules[i].title;
-              return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
+              this.pstitle = this.pList[i].title;
+              return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate();
           }
-        } 
+        }
       },
       isUniversitySchedule: function(year,month,day){
         for (let i = 0; i < universityschedules.length; i++){
@@ -122,9 +153,9 @@ export default {
           if(year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate()){
             this.ustitle = universityschedules[i].title;
             this.ussubname = universityschedules[i].subjectName;
-            return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
+            return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate();
           }
-        } 
+        }
       },
       init:function(){
         this.currentMonthStartWeekIndex = this.getStartWeek(this.currentYear, this.currentMonth);
@@ -230,7 +261,22 @@ export default {
         let date = new Date();
         return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate(); 
       }
-  }
+  },
+    // computed:{
+    //     isUniversitySchedule: function(year,month,day){
+    //         for (let i = 0; i < universityschedules.length; i++){
+    //             var dateForm = universityschedules[i].date.substr(0,10);
+    //             var date = new Date(dateForm);
+    //             var a = this.justForComputed;
+    //             //console.log(universityschedules[i]);
+    //             if(year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate()){
+    //                 this.ustitle = universityschedules[i].title;
+    //                 this.ussubname = universityschedules[i].subjectName;
+    //                 return year == date.getFullYear() && month == date.getMonth()+1 && day == date.getDate();
+    //             }
+    //         }
+    //     },
+    // }
 }
 </script>
 
@@ -242,5 +288,64 @@ export default {
       background-color:#2b6bd1;
       padding:10px;
       color:#ffffff;
+    }
+    .popup{
+        background:rgba(0,0,0,.4);
+        clear:both;
+        position: fixed;
+        height: 100%;
+        position: fixed;
+        align-content: center;
+        text-align: center;
+        width: 100%;
+        top: 0;
+        left: 0;
+        display: none;
+        /*clear: both;*/
+        cursor:pointer;
+        /*display:none;*/
+        /*height:100%;*/
+        /*position:fixed;*/
+        /*text-align:center;*/
+        /*top:0;*/
+        /*width:100%;*/
+    }
+    .popup .helper{
+        display:inline-block;
+        height:100%;
+        vertical-align:middle;
+    }
+    .popup> div {
+        background-color: #fff;
+        box-shadow: 10px 10px 60px #555;
+        display: inline-block;
+        height: auto;
+        max-width: 551px;
+        min-height: 100px;
+        vertical-align: middle;
+        width: 100%;
+        position: center;
+        border-radius: 8px;
+        /*padding: 15px 5%;*/
+    }
+    .popupCloseButton {
+        background-color: #fff;
+        border: 3px solid #999;
+        border-radius: 50px;
+        cursor: pointer;
+        display: inline-block;
+        font-family: arial;
+        font-weight: bold;
+        position: absolute;
+        top: -20px;
+        right: -20px;
+        font-size: 25px;
+        line-height: 30px;
+        width: 30px;
+        height: 30px;
+        text-align: center;
+    }
+    .popupCloseButton:hover {
+        background-color: #ccc;
     }
 </style>
