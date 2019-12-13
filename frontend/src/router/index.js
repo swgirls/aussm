@@ -2,6 +2,7 @@ import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
 import Register from '../views/Register.vue'
+import Delete from '../views/Delete'
 
 Vue.use(VueRouter)
 
@@ -26,6 +27,10 @@ const routes = [
     name : 'register',
     component : Register
   },
+  {path:'/delete',
+  name:'delete',
+  component: Delete
+  }
 ]
 
 const router = new VueRouter({

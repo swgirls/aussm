@@ -2,7 +2,7 @@ var express = require('express');
 var router = express.Router();
 const mongoose = require('mongoose');
 const autoInc = require('mongoose-auto-increment');
-mongoose.connect('mongodb://localhost:27017/aussm', { useUnifiedTopology: true, useNewUrlParser: true });
+mongoose.connect('mongodb://localhost:27017/AUSSM', { useUnifiedTopology: true, useNewUrlParser: true });
 autoInc.initialize(mongoose.connection);
 const conn = mongoose.connection;
 var dateUtils = require('date-utils');
@@ -73,7 +73,7 @@ router.get('/schedule', async function(req, res, next){
         var unidate = new Date();
         const checkSchedule = await universityModel.findOne({"title": "Domain Analysis iteration1 Assignment"});
         if(checkSchedule==null){
-            var from = "2019-12-10 00:00:00";
+            var from = "2019-12-14 00:00:00";
             var dateForm = from.substr(0,10);
             var date = new Date(dateForm);
 
@@ -82,7 +82,7 @@ router.get('/schedule', async function(req, res, next){
         }
         const checkSchedule1 = await universityModel.findOne({"title": "Web System Assignment 1"});
         if(checkSchedule1 == null){
-            var from ="2019-12-12 00:00:00";
+            var from ="2019-12-19 00:00:00";
             var dateForm = from.substr(0,10);
             var date = new Date(dateForm);
 
