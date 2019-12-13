@@ -1,4 +1,4 @@
-<template>
+<template xmlns:v-on="http://www.w3.org/1999/xhtml">
   <div>
     <img alt="Vue logo" src="../assets/logo.png" style ="width : 700px; height : 250px;">
     <h1>Register Schedule</h1>
